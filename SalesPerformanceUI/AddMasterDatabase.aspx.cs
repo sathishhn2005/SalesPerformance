@@ -16,6 +16,11 @@ namespace SalesPerformanceUI
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack) {
+                int Id = Convert.ToInt32(Request.QueryString["Id"]);
+              //  string lastname = Request.QueryString["lastname"];
+                //Label1.Text = "welcome" + firstname + " " + lastname;
+            }
 
         }
         public void BindProducerName(string SpName, string Value, string Text)
@@ -73,7 +78,7 @@ namespace SalesPerformanceUI
                     cmd.Parameters.Add("@PolicyNumber", SqlDbType.NVarChar).Value = txtPolicyNumber.Text.ToString();
                     cmd.Parameters.Add("@PolicyStartDate", SqlDbType.DateTime).Value = txtPolicyStartDate.Text.ToString();
                     cmd.Parameters.Add("@PolicyEndDate", SqlDbType.DateTime).Value = txtPolicyEndDate.Text.ToString();
-                    cmd.Parameters.Add("@Status", SqlDbType.DateTime).Value = ddstatus.Text.ToString();
+                    cmd.Parameters.Add("@Status", SqlDbType.NVarChar).Value = ddstatus.Text.ToString();
 
                     int output1 = cmd.ExecuteNonQuery();
                     if (output1 > 0)

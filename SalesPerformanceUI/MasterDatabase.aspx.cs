@@ -56,7 +56,9 @@ namespace SalesPerformanceUI
             //string ClaimNo;
             //int flag = 0;
             //Response.Redirect("AddClaims.aspx?Val=" + ClaimNo + "&flag=" + flag + "");
-            Response.Redirect("AddMasterDatabase");
+           // long Id = long.Parse(GridView1.DataKeys[e.NewEditIndex].Values["ID"].ToString());
+
+        Response.Redirect("AddMasterDatabase");
         }
 
         protected void btnMotSearch_Click(object sender, EventArgs e)

@@ -18,9 +18,6 @@ namespace SalesPerformanceUI
         {
             if (!IsPostBack)
             {
-
-
-
                 if (Request.QueryString["Val"] != null && Request.QueryString["Val"] != string.Empty)
                 {
                     ViewState["Id"] = Request.QueryString["Val"];
@@ -29,7 +26,7 @@ namespace SalesPerformanceUI
                 if (Request.QueryString["flag"] != null)
                 {
                     flag = Convert.ToInt32(Request.QueryString["flag"]);
-                    binddate(ViewState["Id"].ToString());
+                    ///  binddate(ViewState["Id"].ToString());
                 }
 
             }
@@ -46,12 +43,27 @@ namespace SalesPerformanceUI
             {
                 DDBusinessType.Text = ds.Tables[0].Rows[0]["BusinessType"].ToString();
                 DDProducer.Text = ds.Tables[0].Rows[0]["Producer"].ToString();
+                string Producer = ds.Tables[0].Rows[0]["Producer"].ToString();
+                if (Producer == "Agent")
+                {
+                    BindProducerName("SP_AgentName", "AgentCode", "AgentName");
+                }
+
+                else if (Producer == "Broker")
+                {
+                    BindProducerName("SP_BrokerName", "BrokerCode", "BrokerName");
+                }
+
                 DDProducerName.Text = ds.Tables[0].Rows[0]["ProducerName"].ToString();
                 DropDownList2.Text = ds.Tables[0].Rows[0]["ProductName"].ToString();
-                txtPolicyNumber.Text= ds.Tables[0].Rows[0]["PolicyNumber"].ToString();
-                txtPolicyStartDate.Text = ds.Tables[0].Rows[0]["PolicyStartDate"].ToString();
-                txtPolicyEndDate.Text = ds.Tables[0].Rows[0]["PolicyEndDate"].ToString();
-                txtRenewalBase.Text = ds.Tables[0].Rows[0]["RenewalBase"].ToString();
+                txtPolicyNumber.Text = ds.Tables[0].Rows[0]["PolicyNumber"].ToString();
+                //txtPolicyStartDate.Text ds.Tables[0].Rows[0]["PolicyStartDate"].ToString("yyyy-MM-dd");
+                txtPolicyStartDate.Text = DateTime.Parse((ds.Tables[0].Rows[0]["PolicyStartDate"].ToString())).ToString("yyyy-MM-dd");
+                txtPolicyEndDate.Text = DateTime.Parse((ds.Tables[0].Rows[0]["PolicyEndDate"].ToString())).ToString("yyyy-MM-dd");
+
+                //   txtPolicyStartDate.Text = ds.Tables[0].Rows[0]["PolicyStartDate"].ToString("yyyy-MM-dd");
+               // txtPolicyEndDate.Text = ds.Tables[0].Rows[0]["PolicyEndDate"].ToString();
+               txtRenewalBase.Text = ds.Tables[0].Rows[0]["RenewalBase"].ToString();
                 txtProbableRenewal.Text = ds.Tables[0].Rows[0]["ProbableBase"].ToString();
                 DDStatus.Text = ds.Tables[0].Rows[0]["Status"].ToString();
             }
@@ -73,7 +85,7 @@ namespace SalesPerformanceUI
                 DDProducerName.Items.Clear();
             }
         }
-        public void BindProducerName(string SpName, string Value,string Text)
+        public void BindProducerName(string SpName, string Value, string Text)
         {
             SqlConnection con = new SqlConnection(ST);
             con.Open();
@@ -87,7 +99,7 @@ namespace SalesPerformanceUI
                 DDProducerName.DataTextField = Text;
                 DDProducerName.DataValueField = Value;
                 DDProducerName.DataBind();
-                
+
             }
             cmdEmp.Dispose();
             drEmp.Dispose();
@@ -150,7 +162,7 @@ namespace SalesPerformanceUI
 
         protected void BtnClose_Click(object sender, EventArgs e)
         {
-
+            Response.Redirect("Target Fixing Main.aspx");
         }
 
         protected void BtnUpdate_Click(object sender, EventArgs e)
@@ -162,25 +174,29 @@ namespace SalesPerformanceUI
                 {
 
                     con.Open();
-                    SqlCommand cmd = new SqlCommand("SPTFUpdate", con);
-                    cmd.CommandType = CommandType.StoredProcedure;
+                    SqlCommand cmd = new SqlCommand("SPTFUpdate", con)
+                    {
+                        CommandType = CommandType.StoredProcedure
+                    };
                     cmd.Parameters.Add("@Id", SqlDbType.NVarChar).Value = ViewState["Id"];
                     cmd.Parameters.Add("@BusinessType", SqlDbType.NVarChar).Value = DDBusinessType.Text;
                     cmd.Parameters.Add("@Producer", SqlDbType.NVarChar).Value = DDProducer.Text;
-                    cmd.Parameters.Add("@ProducerName", SqlDbType.Float).Value = DDProducerName.Text;
+                    cmd.Parameters.Add("@ProducerName", SqlDbType.NVarChar).Value = DDProducerName.Text;
                     cmd.Parameters.Add("@ProductName", SqlDbType.NVarChar).Value = DropDownList2.Text;
+
                     cmd.Parameters.Add("@PolicyNumber", SqlDbType.NVarChar).Value = txtPolicyNumber.Text;
-                    cmd.Parameters.Add("@PolicyStartDate", SqlDbType.NVarChar).Value = txtPolicyStartDate.Text.ToString();
-                    cmd.Parameters.Add("@PolicyEndDate", SqlDbType.NVarChar).Value = txtPolicyEndDate.Text.ToString();
+                    cmd.Parameters.Add("@PolicyStartDate", SqlDbType.DateTime).Value = txtPolicyStartDate.Text.ToString();
+                    cmd.Parameters.Add("@PolicyEndDate", SqlDbType.DateTime).Value = txtPolicyEndDate.Text.ToString();
                     cmd.Parameters.Add("@RenewalBase", SqlDbType.NVarChar).Value = txtRenewalBase.Text;
                     cmd.Parameters.Add("@ProbableBase", SqlDbType.NVarChar).Value = txtProbableRenewal.Text;
+
                     cmd.Parameters.Add("@Status", SqlDbType.NVarChar).Value = DDStatus.Text;
                     int output12 = cmd.ExecuteNonQuery();
                     if (output12 > 0)
                     {
 
                         ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('Claim Updated Successfully');", true);
-                        Response.Redirect("ProspectAddScreen.aspx");
+                      //  Response.Redirect("ProspectAddScreen.aspx");
                     }
                     else if (output12 < 0)
                     {
@@ -203,4 +219,4 @@ namespace SalesPerformanceUI
             }
         }
     }
-    }
+}
