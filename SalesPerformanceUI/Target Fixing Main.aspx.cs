@@ -25,7 +25,7 @@ namespace SalesPerformanceUI
         public void refreshdata()
         {
             SqlConnection con = new SqlConnection(ST);
-            SqlDataAdapter sda = new SqlDataAdapter("select * from TargetFixing", con);
+            SqlDataAdapter sda = new SqlDataAdapter("select * from TargetFixing where PolicyEndDate between DATEADD(month, -2, GETDATE()) and DATEADD(month, 2, GETDATE())", con);
             DataSet ds = new DataSet();
             sda.Fill(ds);
             TargetFixGrid.DataSource = ds;
@@ -55,7 +55,7 @@ namespace SalesPerformanceUI
                 string Producer = txtProducer.Text;
                 string ProducerName = txtProducerName.Text;
                 SqlConnection con = new SqlConnection(ST);
-                SqlDataAdapter sdaa = new SqlDataAdapter("select * from TargetFixing where BusinessType='" + BusinessType + "' or Producer='" + Producer + "' or ProducerName='" + ProducerName + "'", con);
+                SqlDataAdapter sdaa = new SqlDataAdapter("select * from TargetFixing where PolicyEndDate between DATEADD(month, -2, GETDATE()) and DATEADD(month, 2, GETDATE()) and BusinessType='" + BusinessType + "' or Producer='" + Producer + "' or ProducerName='" + ProducerName + "'", con);
                 DataSet dsa = new DataSet();
                 sdaa.Fill(dsa);
                 TargetFixGrid.DataSource = dsa;
