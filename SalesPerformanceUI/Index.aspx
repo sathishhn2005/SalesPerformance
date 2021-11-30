@@ -68,7 +68,7 @@
 
                             </div>
                         </li>
-                        
+
 
                     </ul>
                 </nav>
@@ -81,20 +81,23 @@
                         <li class="breadcrumb-item">Home</li>
                         <li class="breadcrumb-item active">MIS Dashboard</li>
                     </ol>
-                    <div class="flex-grow-1">
-                        0                               
-                        <asp:Label runat="server">Producer</asp:Label>
-                        <asp:DropDownList ID="ddlProducer" CssClass="form-control form-control-sm" runat="server">
-                         
-                        </asp:DropDownList>
-
-                        <asp:Label runat="server">Choose Producer</asp:Label>
-                        <asp:DropDownList ID="ddlProducerType" OnTextChanged="ProducerType_TextChanged" CssClass="form-control form-control-sm" runat="server">
-                          
-                        </asp:DropDownList>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <asp:Label runat="server"><b>Producer</b></asp:Label>
+                            <asp:DropDownList ID="ddlProducer" CssClass="form-control form-control-sm" AutoPostBack="true" OnSelectedIndexChanged="ddlProducer_SelectedIndexChanged" runat="server">
+                                <asp:ListItem Text="Select" Value="0"></asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
+                        <div class="col-md-4">
+                            <asp:Label runat="server"><b>Choose Producer Name</b></asp:Label>
+                            <asp:DropDownList ID="ddlProducerType" OnTextChanged="ProducerType_TextChanged" AutoPostBack="true" CssClass="form-control form-control-sm" runat="server">
+                                <asp:ListItem Text="Select" Value="0"></asp:ListItem>
+                            </asp:DropDownList>
+                        </div>
                     </div>
+                  
 
-                    <div class="row mb-3">
+                    <div class="row mb-3 my-4">
 
                         <div class="col-md-6 mb-4">
                             <div class="card h-100">
@@ -109,7 +112,6 @@
                                                         <div class="d-flex justify-content-between">
                                                             <label class="font-16">Total Available Prospects</label>
                                                             <label id="TotalAvailableProspects" runat="server" class="text-primary font-weight-bold font-16 ">
-                                                                
                                                             </label>
                                                         </div>
                                                         <div class="d-flex justify-content-between">
@@ -441,7 +443,7 @@
                             });
                         },
                         error: function (Result) {
-                           // alert("Error");
+                            // alert("Error");
                         }
                     });
                 },

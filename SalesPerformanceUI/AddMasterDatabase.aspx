@@ -332,12 +332,12 @@
                                                 <div class="card-body">
 
                                                     <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1">
-                       
+
 
 
 
                                                         <div class="form-group row">
-                                                             <asp:Label ID="lblBusinessType" runat="server" CssClass="col-sm-4 col-form-label text-right font-bold" Text="BusinessType" ></asp:Label>  
+                                                            <asp:Label ID="lblBusinessType" runat="server" CssClass="col-sm-4 col-form-label text-right font-bold" Text="BusinessType"></asp:Label>
                                                             <div class="col-md-5">
 
 
@@ -351,32 +351,16 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
-                                                                <asp:Label ID="lblProducer" runat="server" CssClass="col-sm-4 col-form-label text-right font-bold" Text="Producer" ></asp:Label>  
-                                                            
+                                                            <asp:Label ID="lblProducer" runat="server" CssClass="col-sm-4 col-form-label text-right font-bold" Text="Producer"></asp:Label>
+
                                                             <div class="col-md-5">
-
-
-
                                                                 <asp:DropDownList ID="DDProducer" CssClass="form-control form-control-sm text-box single-line" runat="server" OnSelectedIndexChanged="DDProducer_SelectedIndexChanged" AutoPostBack="true">
-                                                                    <asp:ListItem Text="Select" Value="0"></asp:ListItem>
-
-                                                                    <asp:ListItem Text="Agent" Value="Agent"></asp:ListItem>
-                                                                    <asp:ListItem Text="Broker" Value="Broker"></asp:ListItem>
-                                                                    <asp:ListItem Text="Branches" Value="Branches"></asp:ListItem>
-                                                                    <asp:ListItem Text="Bank Assurance" Value="Bank Assurance"></asp:ListItem>
-                                                                    <asp:ListItem Text="Direct Head Office" Value="Direct Head Office"></asp:ListItem>
-                                                                    <asp:ListItem Text="Direct Corporate Office" Value="Direct Corporate Office"></asp:ListItem>
-                                                                    <asp:ListItem Text="Direct Retail Office" Value="Direct Retail Office"></asp:ListItem>
-
                                                                 </asp:DropDownList>
-
-
-
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
-                                                             <asp:Label ID="lblProducerName" runat="server" CssClass="col-sm-4 col-form-label text-right font-bold" Text="Producer Name" ></asp:Label>  
-                                                             <div class="col-md-5">
+                                                            <asp:Label ID="lblProducerName" runat="server" CssClass="col-sm-4 col-form-label text-right font-bold" Text="Producer Name"></asp:Label>
+                                                            <div class="col-md-5">
 
                                                                 <asp:DropDownList ID="DDProducerName" CssClass="form-control form-control-sm text-box single-line" runat="server">
                                                                 </asp:DropDownList>
@@ -386,8 +370,8 @@
                                                         </div>
 
                                                         <div class="form-group row">
-                                                            <asp:Label ID="lblProductName" runat="server" CssClass="col-sm-4 col-form-label text-right font-bold" Text="Product Name" ></asp:Label>  
-                                                           
+                                                            <asp:Label ID="lblProductName" runat="server" CssClass="col-sm-4 col-form-label text-right font-bold" Text="Product Name"></asp:Label>
+
                                                             <div class="col-md-5">
 
                                                                 <asp:DropDownList ID="DropDownList2" CssClass="form-control form-control-sm text-box single-line" runat="server">
@@ -402,8 +386,8 @@
                                                             </div>
                                                         </div>
                                                         <div class="form-group row">
-                                                              <asp:Label ID="lblPolicyNumber" runat="server" CssClass="col-sm-4 col-form-label text-right font-bold" Text="Policy Number" ></asp:Label>  
-                                                          <div class="col-md-5">
+                                                            <asp:Label ID="lblPolicyNumber" runat="server" CssClass="col-sm-4 col-form-label text-right font-bold" Text="Policy Number"></asp:Label>
+                                                            <div class="col-md-5">
                                                                 <asp:TextBox ID="txtPolicyNumber" runat="server" CssClass="form-control form-control-sm text-box single-line"></asp:TextBox>
 
                                                             </div>
@@ -411,8 +395,8 @@
 
 
                                                         <div class="form-group row">
-                                                            <asp:Label ID="lblPolicyStartDate" runat="server" CssClass="col-sm-4 col-form-label text-right font-bold" Text="Policy Start Date" ></asp:Label>  
-                                                     
+                                                            <asp:Label ID="lblPolicyStartDate" runat="server" CssClass="col-sm-4 col-form-label text-right font-bold" Text="Policy Start Date"></asp:Label>
+
                                                             <div class="col-md-5">
                                                                 <asp:TextBox ID="txtPolicyStartDate" Type="date" runat="server" CssClass="form-control form-control-sm text-box single-line"></asp:TextBox>
 
@@ -421,26 +405,26 @@
 
 
                                                         <div class="form-group row">
-                                                          <asp:Label ID="lblPolicyEndDate" runat="server" CssClass="col-sm-4 col-form-label text-right font-bold" Text="Policy End Date" ></asp:Label>  
-                                                       <div class="col-md-5">
+                                                            <asp:Label ID="lblPolicyEndDate" runat="server" CssClass="col-sm-4 col-form-label text-right font-bold" Text="Policy End Date"></asp:Label>
+                                                            <div class="col-md-5">
                                                                 <asp:TextBox ID="txtPolicyEndDate" Type="date" runat="server" CssClass="form-control form-control-sm text-box single-line"></asp:TextBox>
                                                             </div>
                                                         </div>
 
-                                                         <div class="form-group row">
-                                                              <asp:Label ID="lblStatus" runat="server" CssClass="col-sm-4 col-form-label text-right font-bold" Text="Status" ></asp:Label>  
-                                                          <div class="col-md-5">
-                                                              <asp:DropDownList ID="ddstatus" CssClass="form-control form-control-sm text-box single-line" runat="server">
+                                                        <div class="form-group row">
+                                                            <asp:Label ID="lblStatus" runat="server" CssClass="col-sm-4 col-form-label text-right font-bold" Text="Status"></asp:Label>
+                                                            <div class="col-md-5">
+                                                                <asp:DropDownList ID="ddstatus" CssClass="form-control form-control-sm text-box single-line" runat="server">
                                                                     <asp:ListItem Enabled="true" Text="Approved" Value="Approved"></asp:ListItem>
                                                                     <asp:ListItem Text="Lost" Value="Lost"></asp:ListItem>
-                                                                   
+
 
                                                                 </asp:DropDownList>
 
 
                                                             </div>
                                                         </div>
-                                                       
+
 
                                                         <div class="col-md-6">
 

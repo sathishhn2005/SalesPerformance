@@ -28,11 +28,52 @@ namespace SalesPerformanceUI
                     flag = Convert.ToInt32(Request.QueryString["flag"]);
                     ///  binddate(ViewState["Id"].ToString());
                 }
+                //DDProducer
+                BindProducerDropDown();
 
             }
 
         }
+        private long BindProducerDropDown()
+        {
+            long returnCode = -1;
+            if (DDProducer.Items.Count.Equals(0))
+            {
+                SqlConnection con = new SqlConnection(ST);
+                SqlDataAdapter sdaa = new SqlDataAdapter("select RoleId,RoleName From rolemaster where RoleName<>'Admin'", con);
 
+                DataSet dsa = new DataSet();
+                sdaa.Fill(dsa);
+                DDProducer.DataSource = dsa;
+                
+                DDProducer.DataBind();
+                DDProducer.DataTextField = "RoleName";
+                DDProducer.DataValueField = "RoleId";
+                DDProducer.DataBind();
+                DDProducer.Items.Insert(0, "Select");
+            }
+
+            return returnCode;
+        }
+        private long BindProducerTypeDropDown(int ddlProducer)
+        {
+            long returnCode = -1;
+            if (ddlProducer > 0)
+            {
+
+                SqlConnection con = new SqlConnection(ST);
+                SqlDataAdapter sdaa = new SqlDataAdapter("select ProducerCodeId,ProducerName From [ProducerCodeMaster] where RoleId='" + ddlProducer + "'", con);
+                DataSet dsa = new DataSet();
+                sdaa.Fill(dsa);
+                DDProducerName.DataSource = dsa;
+                DDProducerName.DataBind();
+
+                DDProducerName.DataTextField = "ProducerName";
+                DDProducerName.DataValueField = "ProducerCodeId";
+                DDProducerName.DataBind();
+            }
+            return returnCode;
+        }
         public void binddate(String Id)
         {
             SqlConnection con = new SqlConnection(ST);
@@ -41,20 +82,39 @@ namespace SalesPerformanceUI
             sda.Fill(ds);
             if (ds.Tables[0].Rows.Count > 0)
             {
+                BindProducerDropDown();
                 DDBusinessType.Text = ds.Tables[0].Rows[0]["BusinessType"].ToString();
-                DDProducer.Text = ds.Tables[0].Rows[0]["Producer"].ToString();
+                DDProducer.SelectedItem.Text = ds.Tables[0].Rows[0]["Producer"].ToString();
                 string Producer = ds.Tables[0].Rows[0]["Producer"].ToString();
-                if (Producer == "Agent")
+                if (Producer.Equals("Agent"))
                 {
-                    BindProducerName("SP_AgentName", "AgentCode", "AgentName");
+                    BindProducerTypeDropDown(2);
                 }
-
-                else if (Producer == "Broker")
+                else if (Producer.Equals("Broker"))
                 {
-                    BindProducerName("SP_BrokerName", "BrokerCode", "BrokerName");
+                    BindProducerTypeDropDown(3);
                 }
-
-                DDProducerName.Text = ds.Tables[0].Rows[0]["ProducerName"].ToString();
+                else if (Producer.Equals("Branches"))
+                {
+                    BindProducerTypeDropDown(4);
+                }
+                else if (Producer.Equals("Bank assurance"))
+                {
+                    BindProducerTypeDropDown(5);
+                }
+                else if (Producer.Equals("Direct Head office"))
+                {
+                    BindProducerTypeDropDown(6);
+                }
+                else if (Producer.Equals("Direct corporate office"))
+                {
+                    BindProducerTypeDropDown(7);
+                }
+                else if (Producer.Equals("Direct retail office"))
+                {
+                    BindProducerTypeDropDown(8);
+                }
+                DDProducerName.SelectedItem.Value = ds.Tables[0].Rows[0]["ProducerName"].ToString();
                 DropDownList2.Text = ds.Tables[0].Rows[0]["ProductName"].ToString();
                 txtPolicyNumber.Text = ds.Tables[0].Rows[0]["PolicyNumber"].ToString();
                 //txtPolicyStartDate.Text ds.Tables[0].Rows[0]["PolicyStartDate"].ToString("yyyy-MM-dd");
@@ -62,8 +122,8 @@ namespace SalesPerformanceUI
                 txtPolicyEndDate.Text = DateTime.Parse((ds.Tables[0].Rows[0]["PolicyEndDate"].ToString())).ToString("yyyy-MM-dd");
 
                 //   txtPolicyStartDate.Text = ds.Tables[0].Rows[0]["PolicyStartDate"].ToString("yyyy-MM-dd");
-               // txtPolicyEndDate.Text = ds.Tables[0].Rows[0]["PolicyEndDate"].ToString();
-               txtRenewalBase.Text = ds.Tables[0].Rows[0]["RenewalBase"].ToString();
+                // txtPolicyEndDate.Text = ds.Tables[0].Rows[0]["PolicyEndDate"].ToString();
+                txtRenewalBase.Text = ds.Tables[0].Rows[0]["RenewalBase"].ToString();
                 txtProbableRenewal.Text = ds.Tables[0].Rows[0]["ProbableBase"].ToString();
                 DDStatus.Text = ds.Tables[0].Rows[0]["Status"].ToString();
             }
@@ -71,18 +131,11 @@ namespace SalesPerformanceUI
 
         protected void DDProducer_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (DDProducer.SelectedValue == "Agent")
-            {
-                BindProducerName("SP_AgentName", "AgentCode", "AgentName");
-            }
 
-            else if (DDProducer.SelectedValue == "Broker")
+            if (!DDProducer.SelectedItem.Value.Equals("Select"))
             {
-                BindProducerName("SP_BrokerName", "BrokerCode", "BrokerName");
-            }
-            else
-            {
-                DDProducerName.Items.Clear();
+                int ddlProducerValue = Convert.ToInt32(DDProducer.SelectedItem.Value);
+                BindProducerTypeDropDown(ddlProducerValue);
             }
         }
         public void BindProducerName(string SpName, string Value, string Text)
@@ -123,17 +176,17 @@ namespace SalesPerformanceUI
                         con.Open();
                         SqlCommand cmd = new SqlCommand("SPTFInsert", con);
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.Add("@BusinessType", SqlDbType.NVarChar).Value = DDBusinessType.Text.ToString();
-                        cmd.Parameters.Add("@Producer", SqlDbType.NVarChar).Value = DDProducer.Text.ToString();
-                        cmd.Parameters.Add("@ProducerName", SqlDbType.NVarChar).Value = DDProducerName.Text.ToString();
-                        cmd.Parameters.Add("@ProductName", SqlDbType.NVarChar).Value = DropDownList2.Text.ToString();
+                        cmd.Parameters.Add("@BusinessType", SqlDbType.NVarChar).Value = DDBusinessType.SelectedItem.Text.ToString();
+                        cmd.Parameters.Add("@Producer", SqlDbType.NVarChar).Value = DDProducer.SelectedItem.Value.ToString();
+                        cmd.Parameters.Add("@ProducerName", SqlDbType.NVarChar).Value = DDProducerName.SelectedItem.Value.ToString();
+                        cmd.Parameters.Add("@ProductName", SqlDbType.NVarChar).Value = DropDownList2.SelectedItem.Text.ToString();
                         cmd.Parameters.Add("@PolicyNumber", SqlDbType.NVarChar).Value = txtPolicyNumber.Text.ToString();
 
                         cmd.Parameters.Add("@PolicyStartDate", SqlDbType.DateTime).Value = txtPolicyStartDate.Text.ToString();
                         cmd.Parameters.Add("@PolicyEndDate", SqlDbType.DateTime).Value = txtPolicyEndDate.Text.ToString();
                         cmd.Parameters.Add("@RenewalBase", SqlDbType.NVarChar).Value = txtRenewalBase.Text.ToString();
                         cmd.Parameters.Add("@ProbableBase", SqlDbType.NVarChar).Value = txtProbableRenewal.Text.ToString();
-                        cmd.Parameters.Add("@Status", SqlDbType.NVarChar).Value = DDStatus.Text.ToString();
+                        cmd.Parameters.Add("@Status", SqlDbType.NVarChar).Value = DDStatus.SelectedItem.Text.ToString();
                         int output1 = cmd.ExecuteNonQuery();
                         if (output1 > 0)
                         {
@@ -180,8 +233,8 @@ namespace SalesPerformanceUI
                     };
                     cmd.Parameters.Add("@Id", SqlDbType.NVarChar).Value = ViewState["Id"];
                     cmd.Parameters.Add("@BusinessType", SqlDbType.NVarChar).Value = DDBusinessType.Text;
-                    cmd.Parameters.Add("@Producer", SqlDbType.NVarChar).Value = DDProducer.Text;
-                    cmd.Parameters.Add("@ProducerName", SqlDbType.NVarChar).Value = DDProducerName.Text;
+                    cmd.Parameters.Add("@Producer", SqlDbType.NVarChar).Value = DDProducer.SelectedItem.Value;
+                    cmd.Parameters.Add("@ProducerName", SqlDbType.NVarChar).Value = DDProducerName.SelectedItem.Value;
                     cmd.Parameters.Add("@ProductName", SqlDbType.NVarChar).Value = DropDownList2.Text;
 
                     cmd.Parameters.Add("@PolicyNumber", SqlDbType.NVarChar).Value = txtPolicyNumber.Text;
@@ -196,7 +249,7 @@ namespace SalesPerformanceUI
                     {
 
                         ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('Claim Updated Successfully');", true);
-                      //  Response.Redirect("ProspectAddScreen.aspx");
+                        //  Response.Redirect("ProspectAddScreen.aspx");
                     }
                     else if (output12 < 0)
                     {
@@ -218,5 +271,8 @@ namespace SalesPerformanceUI
                 throw ex;
             }
         }
+
+
+
     }
 }

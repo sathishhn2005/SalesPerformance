@@ -13,7 +13,7 @@ namespace SalesPerformanceUI
             if (!IsPostBack)
             {
                 BindProducerDropDown();
-                BindProducerTypeDropDown();
+               // BindProducerTypeDropDown();
                 GetMISDashBoardLoad("", "");
             }
         }
@@ -30,22 +30,27 @@ namespace SalesPerformanceUI
             ddlProducer.DataTextField = "RoleName";
             ddlProducer.DataValueField = "RoleId";
             ddlProducer.DataBind();
+            ddlProducer.Items.Insert(0, "Select");
+
             return returnCode;
         }
-        private long BindProducerTypeDropDown()
+        private long BindProducerTypeDropDown(int ddlProducer)
         {
             long returnCode = -1;
+            if (ddlProducer > 0)
+            {
 
-            SqlConnection con = new SqlConnection(ST);
-            SqlDataAdapter sdaa = new SqlDataAdapter("select ProducerCodeId,ProducerName From [ProducerCodeMaster]", con);
-            DataSet dsa = new DataSet();
-            sdaa.Fill(dsa);
-            ddlProducerType.DataSource = dsa;
-            ddlProducerType.DataBind();
+                SqlConnection con = new SqlConnection(ST);
+                SqlDataAdapter sdaa = new SqlDataAdapter("select ProducerCodeId,ProducerName From [ProducerCodeMaster] where RoleId='" + ddlProducer + "'", con);
+                DataSet dsa = new DataSet();
+                sdaa.Fill(dsa);
+                ddlProducerType.DataSource = dsa;
+                ddlProducerType.DataBind();
 
-            ddlProducerType.DataTextField = "ProducerName";
-            ddlProducerType.DataValueField = "ProducerCodeId";
-            ddlProducerType.DataBind();
+                ddlProducerType.DataTextField = "ProducerName";
+                ddlProducerType.DataValueField = "ProducerCodeId";
+                ddlProducerType.DataBind();
+            }
             return returnCode;
         }
         private long GetMISDashBoardLoad(string Producer, string ProducerType)
@@ -103,6 +108,15 @@ namespace SalesPerformanceUI
             Producer = ddlProducer.SelectedItem.Text;
             ProducerType = ddlProducerType.SelectedItem.Text;
             GetMISDashBoardLoad(Producer, ProducerType);
+        }
+
+        protected void ddlProducer_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!ddlProducer.SelectedItem.Value.Equals("Select"))
+            {
+                int ddlProducerValue = Convert.ToInt32(ddlProducer.SelectedItem.Value);
+                BindProducerTypeDropDown(ddlProducerValue);
+            }
         }
     }
 }

@@ -382,16 +382,10 @@
 
 
 
-                                                                <asp:DropDownList ID="DDProducer" CssClass="form-control form-control-sm text-box single-line" runat="server" OnSelectedIndexChanged="DDProducer_SelectedIndexChanged" AutoPostBack="true">
-                                                                    <asp:ListItem Text="Select" Value="0"></asp:ListItem>
+                                                                <asp:DropDownList ID="DDProducer" CssClass="form-control form-control-sm text-box single-line"
+                                                                    runat="server" OnSelectedIndexChanged="DDProducer_SelectedIndexChanged" AutoPostBack="true">
                                                                     
-                                                                    <asp:ListItem Text="Agent" Value="Agent"></asp:ListItem>
-                                                                    <asp:ListItem Text="Broker" Value="Broker"></asp:ListItem>
-                                                                    <asp:ListItem Text="Branches" Value="Branches"></asp:ListItem>
-                                                                    <asp:ListItem Text="Bank Assurance" Value="Bank Assurance"></asp:ListItem>
-                                                                    <asp:ListItem Text="Direct Head Office" Value="Direct Head Office"></asp:ListItem>
-                                                                    <asp:ListItem Text="Direct Corporate Office" Value="Direct Corporate Office"></asp:ListItem>
-                                                                    <asp:ListItem Text="Direct Retail Office" Value="Direct Retail Office"></asp:ListItem>
+                                                                  
 
                                                                 </asp:DropDownList>
 
@@ -404,7 +398,7 @@
                                                             <div class="col-md-5">
 
                                                                 <asp:DropDownList ID="DDProducerName" CssClass="form-control form-control-sm text-box single-line" runat="server">
-                                                                    
+                                                                    <asp:ListItem Text="Select" Value="0"></asp:ListItem>
 
                                                                 </asp:DropDownList>
 

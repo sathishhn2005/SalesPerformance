@@ -2,11 +2,6 @@
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
-
-
-
-
-
     <link href="/vendor/morris/morris.css" rel="stylesheet" type="text/css" />
     <link href="/vendor/fontawesome-free/css/all.css" rel="stylesheet" type="text/css" />
     <link href="/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
@@ -44,33 +39,32 @@
                         <span>BI Dashboard</span>
                     </a>
                 </li>
-     
-                 <hr class="sidebar-divider">
-            <div class="sidebar-heading">
 
-            </div>
-             <div class="sidebar-heading">
-                Screens
-            </div>
-           <li class="nav-item">
-                <a class="nav-link" href="MasterDatabase.aspx">
-                    <i class="fas fa-fw fa-car"></i>
-                    <span>Transaction</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="Target Fixing Main.aspx">
-                    <i class="fas fa-fw fa-phone"></i>
-                    <span>Target Fixing</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="ProspectAddScreen.aspx">
-                    <i class="fas fa-fw fa-user"></i>
-                    <span>Prospect Add Screen</span>
-                </a>
-            </li> 
-          <li class="nav-item hide">
+                <hr class="sidebar-divider">
+                <div class="sidebar-heading">
+                </div>
+                <div class="sidebar-heading">
+                    Screens
+                </div>
+                <li class="nav-item">
+                    <a class="nav-link" href="MasterDatabase.aspx">
+                        <i class="fas fa-fw fa-car"></i>
+                        <span>Transaction</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Target Fixing Main.aspx">
+                        <i class="fas fa-fw fa-phone"></i>
+                        <span>Target Fixing</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="ProspectAddScreen.aspx">
+                        <i class="fas fa-fw fa-user"></i>
+                        <span>Prospect Add Screen</span>
+                    </a>
+                </li>
+                <li class="nav-item hide">
                     <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
                         aria-expanded="true" aria-controls="collapseBootstrap">
                         <i class="far fa-fw fa-window-maximize"></i>
@@ -105,7 +99,7 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
                                     aria-labelledby="searchDropdown">
-                                    <form class="navbar-search">
+                                   
                                         <div class="input-group">
                                             <input type="text" class="form-control bg-light border-1 small"
                                                 placeholder="What do you want to look for?" aria-label="Search" aria-describedby="basic-addon2"
@@ -116,7 +110,7 @@
                                                 </button>
                                             </div>
                                         </div>
-                                    </form>
+                                    
                                 </div>
                             </li>
                             <li class="nav-item dropdown no-arrow mx-1 d-none">
@@ -332,60 +326,60 @@
                                     <div class="card-header py-2 d-flex flex-row align-items-center justify-content-between">
                                         <h6 class="m-0 font-weight-bold text-primary">Search</h6>
                                     </div>
-                                    <form id="MotorForm">
+                                    
                                         <div class="card-body">
                                             <div class="row">
-                                                <form action="/MasterDatabase" method="get">
+                                              
+                                                    <%--<div class="col-2">
+
+                                                        <asp:TextBox ID="txtPolicyName" Class="form-control form-control-sm  mb-3" runat="server" PlaceHolder="Policy Name"></asp:TextBox>
+                                                    </div>--%>
                                                     <div class="col-2">
 
-                                                                <asp:textbox ID="lblPolicyName" Class="form-control form-control-sm  mb-3" runat="server" PlaceHolder="Policy Name"></asp:textbox>  
+                                                        <asp:TextBox ID="txtPolicyFromDate" type="date" CssClass="form-control form-control-sm  mb-3" runat="server"></asp:TextBox>
+
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <asp:TextBox ID="txtPolicyToDate" type="date" CssClass="form-control form-control-sm  mb-3" runat="server"></asp:TextBox>
+
+
+                                                    </div>
+
+
+                                                    <div class="col-2">
+                                                        <asp:TextBox ID="txtPolicyNum" CssClass="form-control form-control-sm  mb-3" runat="server" PlaceHolder="Policy No"></asp:TextBox>
+
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <asp:TextBox ID="txtBusinesstype" CssClass="form-control form-control-sm  mb-3" runat="server" PlaceHolder="Business Type"></asp:TextBox>
                                                     </div>
                                                     <div class="col-2">
 
-                                                        <asp:textbox ID="txtPolicyFromDate" type="date" CssClass="form-control form-control-sm  mb-3" runat="server" ></asp:textbox>  
+
+                                                        <asp:Button ID="btnMotSearch" class="btn btn-primary btn-sm" runat="server" Text="Search" OnClick="btnMotSearch_Click" />
+                                                        <asp:Button ID="btnMotClear" class="btn btn-primary btn-sm" runat="server" Text="Clear" OnClick="btnMotClear_Click" />
+
+                                                    </div>
                                                
-                                                               </div>
-                                                    <div class="col-2">
-                                                        <asp:textbox ID="txtPolicyToDate" type="date" CssClass="form-control form-control-sm  mb-3" runat="server" ></asp:textbox>  
-                                               
-
-                                                        </div>
-                    
-                                                   
-                                                    <div class="col-2">
-                                                        <asp:textbox ID="txtPolicyNum" CssClass="form-control form-control-sm  mb-3" runat="server" PlaceHolder="Policy No"></asp:textbox>  
-                                              
-                                                       </div>
-                                                    <div class="col-2">
-                                                      <asp:textbox ID="txtBusinesstype" CssClass="form-control form-control-sm  mb-3" runat="server" PlaceHolder="Business Type"></asp:textbox>  
-                                              </div>
-                                                    <div class="col-2">
-
-
-                                                        <asp:Button ID="btnMotSearch" class="btn btn-primary btn-sm" runat="server" Text="Search" OnClick="btnMotSearch_Click"/>
-                                                        <asp:Button ID="btnMotClear" class="btn btn-primary btn-sm" runat="server" Text="Clear" OnClick="btnMotClear_Click"/>
-
-                                                        </div>
-                                                </form>
                                             </div>
                                         </div>
-                                    </form>
+                                  
                                 </div>
-                                 <div class="col-2">
+                                <div class="col-2">
 
-                                      <asp:Button ID="btnBulkUpload" class="btn btn-primary btn-sm" runat="server" Text="BulkUpload" OnClick="btnBulkUpload_Click1"/>
+                                    <asp:Button ID="btnBulkUpload" class="btn btn-primary btn-sm" runat="server" Text="BulkUpload" OnClick="btnBulkUpload_Click1" />
 
-                                   
 
-                                      <asp:Button ID="btnAddNewPolicy" class="btn btn-primary btn-sm" runat="server" Text="Add New Policy" OnClick="btnAddNewPolicy_Click"/>
 
-                                                    
-                                   </div>
+                                    <asp:Button ID="btnAddNewPolicy" class="btn btn-primary btn-sm" runat="server" Text="Add New Policy" OnClick="btnAddNewPolicy_Click" />
+
+
+                                </div>
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <asp:GridView runat="server" CssClass="table table-bordered" Width="100%" ID="GridView1" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false" OnRowEditing="GridView1_RowEditing">
+                                        <asp:GridView runat="server" CssClass="table table-bordered" Width="100%" ID="GridView1" DataKeyNames="Id" ShowHeaderWhenEmpty="true" AutoGenerateColumns="false" OnRowEditing="GridView1_RowEditing">
                                             <Columns>
-                                                 <asp:BoundField DataField="BusinessType" HeaderText="Business Type" />
+                                                <asp:BoundField DataField="BusinessType" HeaderText="Business Type" />
                                                 <asp:BoundField DataField="Producer" HeaderText="Producer" />
                                                 <asp:BoundField DataField="ProducerName" HeaderText="Producer Name" />
                                                 <asp:BoundField DataField="ProductName" HeaderText="Product Name" />
@@ -405,7 +399,7 @@
                                             </Columns>
                                         </asp:GridView>
 
-                                      
+
                                     </div>
                                 </div>
 
@@ -418,7 +412,7 @@
                             </div>
                         </div>
                         <!-- sample modal content -->
-                      
+
                         <!-- /.modal -->
                         <div id="uploadBulk" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-md">
