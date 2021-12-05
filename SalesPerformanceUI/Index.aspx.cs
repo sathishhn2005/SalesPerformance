@@ -1,13 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-
+using System.Linq;
+using System.Web;
+using System.Web.Script.Serialization;
+using System.Web.Script.Services;
+using System.Web.Services;
+using System.Web.UI;
+using System.Web.UI.WebControls;
 
 namespace SalesPerformanceUI
 {
     public partial class Index : System.Web.UI.Page
     {
-        string ST = ConnectionString.GetConnectionString();
+        static string ST = ConnectionString.GetConnectionString();
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
@@ -117,6 +124,60 @@ namespace SalesPerformanceUI
                 int ddlProducerValue = Convert.ToInt32(ddlProducer.SelectedItem.Value);
                 BindProducerTypeDropDown(ddlProducerValue);
             }
+        }
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public static string GetMISDBYearly()
+        {
+            long returnCode = Get(out List<MISDashboard> lstMIDashBoard);
+           
+            JavaScriptSerializer js = new JavaScriptSerializer();
+            //return js.Serialize(lstBIDashBoard);
+
+            return js.Serialize(new
+            {
+                lst = lstMIDashBoard
+            }); ;
+        }
+
+        public static long Get(out List<MISDashboard> lstMIDashBoard)
+        {
+            long returnCode = -1;
+            lstMIDashBoard = new List<MISDashboard>();
+            try
+            {
+                DataSet ds = new DataSet();
+                using (SqlConnection con = new SqlConnection(ST))
+                {
+                    con.Open();
+                    SqlCommand cmd = new SqlCommand
+                    {
+                        CommandText = "SP_GetMISDashBoardYearWise"
+                    };
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Connection = con;
+                    cmd.Parameters.AddWithValue("@Year", "2020");
+
+                    SqlDataAdapter sdaAdapter = new SqlDataAdapter
+                    {
+                        SelectCommand = cmd
+                    };
+                    sdaAdapter.Fill(ds);
+                    //ds.Tables[0].Rows.Count;
+
+                    if (ds.Tables[0].Rows.Count > 0)
+                    {
+                        DTtoListConverter.ConvertTo(ds.Tables[0], out lstMIDashBoard);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return returnCode;
         }
     }
 }

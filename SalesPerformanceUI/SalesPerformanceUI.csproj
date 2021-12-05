@@ -1988,6 +1988,7 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="DTtoListConverter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2019,6 +2020,7 @@
     <Compile Include="MasterDatabase.aspx.designer.cs">
       <DependentUpon>MasterDatabase.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MISDashboard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProspectAddScreen.aspx.cs">
       <DependentUpon>ProspectAddScreen.aspx</DependentUpon>

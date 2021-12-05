@@ -95,7 +95,7 @@
                             </asp:DropDownList>
                         </div>
                     </div>
-                  
+
 
                     <div class="row mb-3 my-4">
 
@@ -150,7 +150,7 @@
                                                     <h4 class="content-color-primary font-weight-bold my-0">Policies Report</h4>
                                                 </div>
                                                 <div>
-                                                    <select class="form-control form-control-sm" id="lstYears" name="lstYears" onchange="javascript:GetSpecificYearWR(this.value);">
+                                                    <select class="form-control form-control-sm" id="lstYears" name="lstYears" onchange="javascript:GetSpecificYearWR(this.value,'PolicyReport');">
                                                         <option value="Monthly">Monthly</option>
                                                         <option value="Yearly">Yearly</option>
                                                     </select>
@@ -200,7 +200,7 @@
                                                     <h4 class="content-color-primary font-weight-bold my-0 ">Strikerate Report</h4>
                                                 </div>
                                                 <div>
-                                                    <select class="form-control form-control-sm" id="lstYearss" name="lstYears" onchange="javascript:GetSpecificYearWR(this.value);">
+                                                    <select class="form-control form-control-sm" id="lstYearss" name="lstYears" onchange="javascript:GetSpecificYearWR(this.value,'StrikeRateReport');">
                                                         <option value="Monthly">Premium</option>
                                                         <option value="Yearly">Counts</option>
                                                     </select>
@@ -252,7 +252,7 @@
                                                     <h4 class="content-color-primary font-weight-bold my-0 ">Premium Report</h4>
                                                 </div>
                                                 <div>
-                                                    <select class="form-control form-control-sm" id="lstYear" name="lstYears" onchange="javascript:GetSpecificYearWR(this.value);">
+                                                    <select class="form-control form-control-sm" id="lstYear" name="lstYears" onchange="javascript:GetSpecificYearWR(this.value,'PremiumReport');">
                                                         <option value="Monthly">Monthly</option>
                                                         <option value="Yearly">Yearly</option>
                                                     </select>
@@ -351,35 +351,25 @@
     </div>
 
     <script type="text/javascript">
-        function GetSpecificYearWR(Year) {
-
-            if (Year == "") {
-                var dt = new Date();
-                Year = dt.getFullYear();
-            }
-            var url = "/Home/GetSpecificYearWiseReport/";
-
+        function GetSpecificYearWR(Year, DataBindingType) {
             $.ajax({
-                url: url,
-                data: { Years: Year },
-                cache: false,
-                type: "GET",
-                success: function (data) {
-                    document.getElementById('lblTNPYear').innerHTML = data.list.TNPYear;
-                    document.getElementById('lblTNPRenewedYear').innerHTML = data.list.TNPRenewedYear;
-                    document.getElementById('lblTNPUnderProcessYear').innerHTML = data.list.TNPUnderProcessYear;
-                    document.getElementById('lblTNPLostYear').innerHTML = data.list.TNPLostYear;
-                    document.getElementById('lblPercentageRenewedYear').innerHTML = data.list.PercentageRenewedYear;
-                    document.getElementById('lblTNPYearPremium').innerHTML = data.list.TNPYearPremium;
-                    document.getElementById('lblTNPRenewedYearPremium').innerHTML = data.list.TNPRenewedYearPremium;
-                    document.getElementById('lblTNPUPYearPremium').innerHTML = data.list.TNPUPYearPremium;
-                    document.getElementById('lblTNPLostYearPremium').innerHTML = data.list.TNPLostYearPremium;
-                    document.getElementById('lblPercentPremiumRenewedYear').innerHTML = data.list.PercentPremiumRenewedYear;
+                type: "POST",
+                //url: "IndexBI.aspx/GetBIDasbBoard",
+                url: '<%= ResolveUrl("Index.aspx/GetMISDBYearly") %>',
+                data: "{}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    var YearlyList = JSON.parse(msg.d)["lst"];
+                    if (DataBindingType == "PremiumReport") {
 
+                    }
+                    else if (DataBindingType == "PolicyReport") {
 
-                },
-                error: function (reponse) {
-                    alert("error : " + reponse);
+                    }
+                    else if (DataBindingType == "StrikeRateReport") {
+
+                    }
                 }
             });
 
